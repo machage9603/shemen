@@ -1,32 +1,26 @@
-import type React from "react"
-import "./globals.css"
-import type { Metadata } from "next"
-import { Raleway } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
+import type React from "react";
+import "./styles.css";
+import { Raleway } from "next/font/google";
+import type { Metadata } from "next";
 
 const raleway = Raleway({
   subsets: ["latin"],
-  variable: "--font-raleway",
   display: "swap",
-})
+});
 
 export const metadata: Metadata = {
-  title: "Coming Soon",
-  description: "Minimalist coming soon page",
-}
+  title: "ShemenEdge Consultancy",
+  description: "coming soon page",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${raleway.variable} font-sans`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
-      </body>
+    <html lang="en">
+      <body className={raleway.className}>{children}</body>
     </html>
-  )
+  );
 }
