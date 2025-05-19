@@ -4,6 +4,7 @@ import "./styles.css";
 import { Raleway } from "next/font/google";
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -68,7 +69,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <Analytics />
+        {children}
+      </body>
     </html>
   );
 }
