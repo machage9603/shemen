@@ -4,12 +4,12 @@ import { FC, useState, useEffect } from "react";
 
 const Home: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
-    // Apply background image to the body element
     document.body.style.backgroundImage = "url('bgnow.jpeg')";
-
-    // Clean up on unmount
     return () => {
       document.body.style.backgroundImage = "";
     };
@@ -17,6 +17,27 @@ const Home: FC = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email }),
+      });
+
+      if (res.ok) {
+        setFeedback("You’re on the A‑list. We’ll hit you up soon! 🎉");
+        setName("");
+        setEmail("");
+      } else {
+        throw new Error("Network boo‑boo");
+      }
+    } catch {
+      setFeedback("Uh oh, something went sideways. Try again?");
+    }
   };
 
   return (
@@ -29,7 +50,6 @@ const Home: FC = () => {
             </Link>
           </div>
 
-          {/* Hamburger menu for mobile */}
           <div className="hamburger-menu" onClick={toggleMenu}>
             <div className={`hamburger-icon ${isMenuOpen ? "open" : ""}`}>
               <span></span>
@@ -38,7 +58,6 @@ const Home: FC = () => {
             </div>
           </div>
 
-          {/* Navigation links - will be controlled by CSS based on screen size and menu state */}
           <nav className={isMenuOpen ? "active" : ""}>
             <Link href="/about" onClick={() => setIsMenuOpen(false)}>
               ABOUT
@@ -58,13 +77,29 @@ const Home: FC = () => {
             Be the first to know when we go live
           </p>
 
-          <div className="form">
+          <form className="form" onSubmit={handleSubmit}>
             <div className="input-group">
-              <input type="text" placeholder="Enter Name" />
-              <input type="email" placeholder="Enter your Email" />
+              <input
+                type="text"
+                placeholder="Your Name"
+                value={name}
+                required
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input
+                type="email"
+                placeholder="Your Email"
+                value={email}
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
-            <button className="sign-up">SEND</button>
-          </div>
+            <button type="submit" className="sign-up">
+              JOIN WAITLIST
+            </button>
+          </form>
+
+          {feedback && <p className="mt-4 text-sm italic">{feedback}</p>}
         </div>
       </main>
 
@@ -96,45 +131,39 @@ const Home: FC = () => {
 
 export default Home;
 
-// Minimal social media icons
-const LinkedInIcon: FC = () => {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect x="2" y="9" width="4" height="12" />
-      <circle cx="4" cy="4" r="2" />
-    </svg>
-  );
-};
+// Icons
+const LinkedInIcon: FC = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect x="2" y="9" width="4" height="12" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 
-const XIcon: FC = () => {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-};
+const XIcon: FC = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
-const InstagramIcon: FC = () => {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <rect x="2" y="2" width="20" height="20" rx="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-    </svg>
-  );
-};
+const InstagramIcon: FC = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+);
