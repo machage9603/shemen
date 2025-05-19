@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  padding: 0;
+  padding: 0px;
   box-sizing: border-box;
 }
 
@@ -8,6 +8,13 @@ body {
   font-family: "Raleway", sans-serif;
   line-height: 1.5;
   color: #333;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .sr-only {
@@ -29,8 +36,6 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
-  background-size: cover;
-  background-position: center;
 }
 
 /* Header */
@@ -42,10 +47,11 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .logo-image {
-  max-height: 40px; /* Adjust as needed */
+  max-height: 100px;
   width: auto;
 }
 
@@ -56,6 +62,7 @@ header {
   color: #333;
 }
 
+/* Navigation - Desktop */
 nav {
   display: flex;
   gap: 2rem;
@@ -74,43 +81,130 @@ nav a:hover {
   color: #000;
 }
 
+/* Hamburger Menu */
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.hamburger-icon {
+  width: 24px;
+  height: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-icon span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: #333;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger-icon.open span:first-child {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger-icon.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-icon.open span:last-child {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: block;
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    transition: right 0.3s ease-in-out;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+  }
+
+  nav.active {
+    right: 0;
+  }
+
+  nav a {
+    font-size: 1.2rem;
+  }
+}
+
 /* Main content */
 main {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1rem;
+  padding: 0rem 0;
 }
 
 .content {
   width: 100%;
-  max-width: 28rem;
   text-align: center;
 }
 
 h1 {
-  font-size: 2.5rem;
-  font-weight: 300;
+  font-size: 5rem;
+  font-weight: 500;
   letter-spacing: 0.05em;
   margin-bottom: 1.5rem;
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 3rem;
+  }
 }
 
 .subtitle {
   font-size: 1.25rem;
   font-weight: 300;
   letter-spacing: 0.025em;
-  margin-bottom: 2.5rem;
+  margin-bottom: 0.5rem;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.subtitle-last {
+  margin-bottom: 3rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .input-group {
   display: flex;
+  background-color: transparent;
   flex-direction: column;
   gap: 1rem;
 }
@@ -126,14 +220,21 @@ input {
   height: 3rem;
   padding: 0.5rem 0;
   border: none;
+  background-color: transparent;
   border-bottom: 1px solid #ccc;
   font-family: "Raleway", sans-serif;
   font-size: 1rem;
 }
 
-input:focus {
+/* Form inputs with better contrast against possible background */
+input, .form-input, .form-textarea {
+  background-color: transparent;
+}
+
+input:focus, .form-input:focus, .form-textarea:focus {
   outline: none;
-  border-bottom-color: #000;
+  border-color: #000;
+  background-color: transparent;
 }
 
 button.sign-up {
@@ -179,8 +280,7 @@ footer {
   width: 100%;
   max-width: 1000px;
   padding: 2rem 1rem;
-  background: linear-gradient(135deg, #4a90e2 0%, #5fb8ff 100%);
-  border-radius: 4px;
+  border-radius: 0px;
 }
 
 /* Fullpage styles for About and Contact */
@@ -190,12 +290,15 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 4rem;
+  position: relative;
 }
 
 .contact-bg {
-  background: linear-gradient(135deg, #4a90e2 0%, #5fb8ff 100%);
+  /* This will be set via JavaScript */
   background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .fullpage-card {
@@ -204,12 +307,21 @@ footer {
   margin: 0;
 }
 
+/* Enhance visibility of content on background image */
+.contact-card, .fullpage-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  border-radius: 0px;
+  overflow: hidden;
+}
+
 .contact-card {
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
 }
 
 @media (min-width: 768px) {
@@ -288,7 +400,7 @@ footer {
   padding: 0.75rem;
   margin-bottom: 1rem;
   border: 1px solid #eaeaea;
-  border-radius: 4px;
+  border-radius: 0px;
 }
 
 .form-textarea {
@@ -309,10 +421,10 @@ footer {
 }
 
 .send-button {
-  background-color: #4a90e2;
+  background-color: #000;
   color: white;
   border: none;
-  border-radius: 50px;
+  border-radius: 0px;
   padding: 0.75rem 2rem;
   font-family: "Raleway", sans-serif;
   font-size: 0.9rem;
@@ -321,7 +433,7 @@ footer {
 }
 
 .send-button:hover {
-  background-color: #3a7bc8;
+  background-color: #666;
 }
 
 /* Back button */
@@ -330,12 +442,13 @@ footer {
   align-items: center;
   gap: 0.5rem;
   position: absolute;
-  bottom: 1.5rem;
-  left: 2rem;
+  top: 1.5rem;
+  left: 1.5rem;
   color: #666;
   text-decoration: none;
-  fontют: 0.9rem;
+  font-size: 0.9rem;
   transition: color 0.2s ease;
+  z-index: 10;
 }
 
 .back-button:hover {

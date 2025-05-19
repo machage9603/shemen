@@ -1,8 +1,24 @@
+"use client";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Contact() {
+  useEffect(() => {
+    // Apply background image to the body element
+    document.body.style.backgroundImage = "url('bgnow.jpeg')";
+
+    // Clean up on unmount
+    return () => {
+      document.body.style.backgroundImage = "";
+    };
+  }, []);
+
   return (
-    <div className="fullpage-container contact-bg">
+    <div className="fullpage-container">
+      <Link href="/" className="back-button">
+        <BackIcon />
+        <span>Back to Home</span>
+      </Link>
       <div className="contact-card fullpage-card">
         <div className="contact-info">
           <h2>Contact Us</h2>
@@ -10,34 +26,34 @@ export default function Contact() {
           <div className="info-item">
             <LocationIcon />
             <div>
-              <p>23, Avenue de Paris</p>
-              <p>75012 Paris</p>
+              <p>Le Mac Building, Church Rd</p>
             </div>
           </div>
 
           <div className="info-item">
             <EmailIcon />
-            <p>hello@example.com</p>
-          </div>
-
-          <div className="info-item">
-            <UserIcon />
-            <p>username</p>
+            <p>info@shemenedge.com</p>
           </div>
 
           <div className="info-item">
             <PhoneIcon />
-            <p>+33 6 19 53 01 44</p>
+            <p>+254 786 576 787</p>
           </div>
 
           <div className="contact-social">
-            <Link href="#" className="social-icon-light">
+            <Link
+              href="https://www.instagram.com/shemen_edge/"
+              className="social-icon-light"
+            >
               <InstagramIcon />
             </Link>
-            <Link href="#" className="social-icon-light">
+            <Link href="https://x.com/shemenedge" className="social-icon-light">
               <XIcon />
             </Link>
-            <Link href="#" className="social-icon-light">
+            <Link
+              href="https://www.linkedin.com/company/shemen-edge-consultancy"
+              className="social-icon-light"
+            >
               <LinkedInIcon />
             </Link>
           </div>
@@ -48,6 +64,7 @@ export default function Contact() {
           <p className="subtitle-small">Feel free to drop us a line below!</p>
 
           <form>
+            <input type="text" placeholder="Your name" className="form-input" />
             <input
               type="email"
               placeholder="Your email"
@@ -57,15 +74,10 @@ export default function Contact() {
               placeholder="Type your message here..."
               className="form-textarea"
             ></textarea>
-            <button type="submit" className="send-button">
+            <button type="button" className="send-button">
               SEND
             </button>
           </form>
-
-          <Link href="/" className="back-button">
-            <BackIcon />
-            <span>Back to Home</span>
-          </Link>
         </div>
       </div>
     </div>
@@ -101,22 +113,6 @@ function EmailIcon() {
     >
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
       <polyline points="22,6 12,13 2,6" />
-    </svg>
-  );
-}
-
-function UserIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
     </svg>
   );
 }

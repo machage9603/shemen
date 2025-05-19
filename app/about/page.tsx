@@ -1,17 +1,42 @@
+"use client";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function About() {
+  useEffect(() => {
+    // Apply background image to the body element
+    document.body.style.backgroundImage = "url('bgnow.jpeg')";
+
+    // Clean up on unmount
+    return () => {
+      document.body.style.backgroundImage = "";
+    };
+  }, []);
+
   return (
-    <div className="fullpage-container contact-bg">
+    <div className="fullpage-container">
+      {/* Back to Home button moved outside the card to the top left */}
+      <Link href="/" className="back-button">
+        <BackIcon />
+        <span>Back to Home</span>
+      </Link>
+
       <div className="contact-card fullpage-card">
         <div className="contact-info">
-          <h2>About Us</h2>
+          <h2>Our Services</h2>
 
           <div className="about-text">
+            <p>BUSINESS DEVELOPMENT</p>
             <p>
-              We are a forward-thinking company dedicated to creating innovative
-              solutions that make a difference.
+              Strategic planning, market research, and growth strategies to
+              drive your organization forward
             </p>
+            <p>RISK MANAGEMENT & COMPLIANCE</p>
+            <p>
+              Expert guidance on risk assessment, mitigation strategies, and
+              regulatory compliance
+            </p>
+            <p>TRAINING & FACILITATION</p>
             <p>
               Founded in 2023, our mission is to combine cutting-edge technology
               with thoughtful design.
@@ -19,50 +44,56 @@ export default function About() {
           </div>
 
           <div className="about-values">
-            <h3>Our Values</h3>
+            <h3>Why Choose Us</h3>
             <ul>
               <li>
                 <CheckIcon />
-                <span>Innovation</span>
+                <span>Tailored Solutions</span>
               </li>
               <li>
                 <CheckIcon />
-                <span>Quality</span>
+                <span>Global Perspective</span>
               </li>
               <li>
                 <CheckIcon />
-                <span>Integrity</span>
+                <span>Expert Team</span>
               </li>
               <li>
                 <CheckIcon />
-                <span>Collaboration</span>
+                <span>Proven Impact</span>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="contact-form about-content">
-          <h2>Our Story</h2>
-          <p className="subtitle-small">
-            Learn more about our journey and vision
-          </p>
+          <h2>About Us</h2>
+          <p className="subtitle-small">Learn more about us & our mission</p>
 
           <div className="about-story">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in
-              dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed
-              auctor neque eu tellus rhoncus ut eleifend nibh porttitor.
+              Shemen Edge Consultancy is a dynamic firm dedicated to delivering
+              strategic solutions in business development, legal services, risk
+              management, and training.
             </p>
 
             <p>
-              Ut in nulla enim. Phasellus molestie magna non est bibendum non
-              venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.
-              Mauris iaculis porttitor posuere.
+              Our mission is to empower organizations—ranging from startups to
+              NGOs and corporates —with tailored strategies and expert guidance
+              that drive growth and efficiency
             </p>
 
             <p>
-              Proin quis tortor orci. Etiam at risus et justo dignissim congue.
-              Donec congue lacinia dui, a porttitor lectus condimentum laoreet.
+              With a global perspective and a commitment to excellence, we
+              provide integrated services that address the unique challenges
+              faced by our clients
+            </p>
+
+            <p>
+              Our bespoke training and facilitation programs are designed to
+              unlock potential and foster success. At Shemen Edge Consultancy,
+              we blend innovation with practical expertise to help you achieve
+              your goals and navigate complex landscapes with confidence
             </p>
 
             <div className="contact-link">
@@ -72,11 +103,6 @@ export default function About() {
               </Link>
             </div>
           </div>
-
-          <Link href="/" className="back-button">
-            <BackIcon />
-            <span>Back to Home</span>
-          </Link>
         </div>
       </div>
     </div>

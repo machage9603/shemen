@@ -1,9 +1,26 @@
+"use client";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
 
 const Home: FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    // Apply background image to the body element
+    document.body.style.backgroundImage = "url('bgnow.jpeg')";
+
+    // Clean up on unmount
+    return () => {
+      document.body.style.backgroundImage = "";
+    };
+  }, []);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <div className="container" style={{ backgroundImage: "url('bg.jpeg')" }}>
+    <div className="container">
       <header>
         <div className="navbar">
           <div className="logo">
@@ -11,9 +28,24 @@ const Home: FC = () => {
               <img src="logo.png" alt="Logo" className="logo-image" />
             </Link>
           </div>
-          <nav>
-            <Link href="/about">ABOUT</Link>
-            <Link href="/contact">CONTACT</Link>
+
+          {/* Hamburger menu for mobile */}
+          <div className="hamburger-menu" onClick={toggleMenu}>
+            <div className={`hamburger-icon ${isMenuOpen ? "open" : ""}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          {/* Navigation links - will be controlled by CSS based on screen size and menu state */}
+          <nav className={isMenuOpen ? "active" : ""}>
+            <Link href="/about" onClick={() => setIsMenuOpen(false)}>
+              ABOUT
+            </Link>
+            <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
+              CONTACT
+            </Link>
           </nav>
         </div>
       </header>
@@ -21,14 +53,17 @@ const Home: FC = () => {
       <main>
         <div className="content">
           <h1>COMING SOON</h1>
-          <p className="subtitle">BE THE FIRST TO KNOW WHEN WE LIVE</p>
+          <p className="subtitle">We are currently working on our website</p>
+          <p className="subtitle subtitle-last">
+            Be the first to know when we go live
+          </p>
 
           <div className="form">
             <div className="input-group">
               <input type="text" placeholder="Enter Name" />
               <input type="email" placeholder="Enter your Email" />
             </div>
-            <button className="sign-up">SIGN UP</button>
+            <button className="sign-up">SEND</button>
           </div>
         </div>
       </main>
